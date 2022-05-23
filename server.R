@@ -1,10 +1,11 @@
 # Define server logic required
 server <- function(input, output, session) {
   
-  # rund <- "/media/aws-prod-file01modeldata/vision2050/opusgit/urbansim_data/data/psrc_parcel/runs"
+  rund <- "/media/aws-prod-file01modeldata/vision2050/opusgit/urbansim_data/data/psrc_parcel/runs"
   # rund2 <- "/media/aws-prod-file01modeldata2/vision2050/opusgit/urbansim_data/data/psrc_parcel/runs"
+  # 'L:/vision2050/opusgit/urbansim_data/data/psrc_parcel/runs'
   
-  volumes <- c(Home = 'L:/vision2050/opusgit/urbansim_data/data/psrc_parcel/runs', "R Installation" = R.home(), getVolumes()())
+  volumes <- c(Home = rund, "R Installation" = R.home(), getVolumes()())
   # volumes <- c(Home = fs::path_home(), "R Installation" = R.home(), getVolumes()())
   # by setting `allowDirCreate = FALSE` a user will not be able to create a new directory
   shinyDirChoose(input, "directory", roots = volumes, session = session, restrictions = system.file(package = "base"), allowDirCreate = FALSE)
