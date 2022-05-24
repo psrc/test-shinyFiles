@@ -31,10 +31,12 @@ server <- function(input, output, session) {
   r <- reactiveValues(runs = c())
   
   observeEvent(input$directory, {
-    dir.path <- parseDirPath(volumes, input$directory)
-    run.name <- str_extract(dir.path, "(?<=/)run_.*$")
-    names(dir.path) <- run.name
-    r$runs <- c(r$runs, dir.path)
+    if(!is.integer(input$directory)) { # if a file is selected
+      dir.path <- parseDirPath(volumes, input$directory)
+      run.name <- input$directory$path[[3]]
+      names(dir.path) <- run.name
+      r$runs <- c(r$runs, dir.path)
+    }
   })
   
   output$widget <- renderUI({
