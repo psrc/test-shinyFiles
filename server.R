@@ -3,7 +3,7 @@ server <- function(input, output, session) {
   
   rund <- "/media/aws-prod-file01modeldata/vision2050/opusgit/urbansim_data/data/psrc_parcel/runs"
   # rund2 <- "/media/aws-prod-file01modeldata2/vision2050/opusgit/urbansim_data/data/psrc_parcel/runs"
-  # local <- 'L:/vision2050/opusgit/urbansim_data/data/psrc_parcel/runs'
+  # rund <- 'L:/vision2050/opusgit/urbansim_data/data/psrc_parcel/runs' # When running locally
   
   volumes <- c(Home = rund, "R Installation" = R.home(), getVolumes()())
   # volumes <- c(Home = fs::path_home(), "R Installation" = R.home(), getVolumes()())
@@ -15,7 +15,6 @@ server <- function(input, output, session) {
   
   observe({
     cat("\ninput$directory value:\n\n")
-    print(input$directory)
     print(input$directory)
   })
   
@@ -44,6 +43,12 @@ server <- function(input, output, session) {
                   label = 'Run Choices',
                   selected = r$runs,
                   choices = r$runs,
+                  multiple = TRUE)
+    } else {
+      selectInput('allRuns',
+                  label = 'Run Choices',
+                  selected = NULL,
+                  choices = NULL,
                   multiple = TRUE)
     }
   })
