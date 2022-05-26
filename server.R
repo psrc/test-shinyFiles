@@ -17,41 +17,24 @@ server <- function(input, output, session) {
     cat("\ninput$directory value:\n\n")
     print(input$directory)
   })
-  
-  output$directorypath <- renderPrint({
-    if (is.integer(input$directory)) {
-      cat("No directory has been selected (shinyDirChoose)")
-    } else {
-      parseDirPath(volumes, input$directory)
-    }
-  })
-  
+
   # -------------------------------------------------------
   
   r <- reactiveValues(runs = c())
   
   observeEvent(input$directory, {
-    if(!is.integer(input$directory)) { # if a file is selected
+    if(!is.integer(input$directory)) { # if a file is selected, add path to list
       dir.path <- parseDirPath(volumes, input$directory)
       run.name <- input$directory$path[[3]]
       names(dir.path) <- run.name
       r$runs <- c(r$runs, dir.path)
     }
-  })
-  
-  output$widget <- renderUI({
+    
     if(length(r$runs > 0)) {
-      selectInput('allRuns',
-                  label = 'Run Choices',
-                  selected = r$runs,
-                  choices = r$runs,
-                  multiple = TRUE)
-    } else {
-      selectInput('allRuns',
-                  label = 'Run Choices',
-                  selected = NULL,
-                  choices = NULL,
-                  multiple = TRUE)
+    updateSelectInput(session,
+                      'allRuns',
+                      selected = r$runs,
+                      choices = r$runs)
     }
   })
 }
