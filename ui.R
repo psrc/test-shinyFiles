@@ -9,10 +9,8 @@ fluidPage(
              tabPanel("Multi-Run",
                       sidebarPanel(width = 3,
                                    run_choice_ui('runChoice_multi', 'Run Choices', 'Select Runs', TRUE)
-                      ), 
-                      mainPanel(width = 9,
-                                verbatimTextOutput('disp_multi') # display the path
-                                )
+                      ), # end sidebarPanel
+                      mainPanel(width = 9)
              ) # end tabPanel
   ) # end navbarPage
 ) # end fluidPage

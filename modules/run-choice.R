@@ -12,11 +12,7 @@ run_choice_ui <- function(id, si_label, btn_label, multi) {
                    label = btn_label,
                    icon = icon("fa-solid fa-folder"),
                    title = "Please select a folder"
-    ),
-    actionButton(ns('clear'),
-                 label = 'Clear'),
-    actionButton(ns('go'), 
-                 label = 'Enter')
+    )
   )
  
 }
@@ -32,7 +28,7 @@ run_choice_server <- function(id, root_dir) {
     observeEvent(input$directory, {
       if(!is.integer(input$directory)) { # if a file is selected, add path to list
         dir.path <- parseDirPath(volumes, input$directory)
-        run.name <- input$directory$path[[length(input$directory$path)]] # run directory is last element of list
+        run.name <- input$directory$path[[3]]
         names(dir.path) <- run.name
         r$runs <- c(r$runs, dir.path)
       }
@@ -44,14 +40,6 @@ run_choice_server <- function(id, root_dir) {
                           selected = r$runs,
                           choices = r$runs)
       }
-    })
-
-    observeEvent(input$clear, {
-      # clear contents of Run Choice(s) box
-      updateSelectInput(session,
-                        'allRuns',
-                        selected = '',
-                        choices = '')
     })
   })
 }
